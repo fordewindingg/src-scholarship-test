@@ -42,12 +42,34 @@ void SparseMatrix::Print() {
 
 SparseMatrix SparseMatrix::operator*(const SparseMatrix &m) {
     SparseMatrix result;
-    // Here's your code
+    for (int32_t i = 0; i < data.size(); i++) {
+        for (int32_t j = 0; j < data.size(); j++) {
+            int32_t prod = 0;
+            for (int32_t k = 0; k < data.size(); k++) {
+                prod += data[j][k] * m.data[k][j];
+            }
+            result.data[i][j] = prod;
+            prod = 0;
+        }
+    }
     return result;
 };
 
 SparseMatrix SparseMatrix::operator^(uint32_t p) {
     SparseMatrix result;
-    // Here's your code
+    SparseMatrix temp;
+    int32_t s;
+    s = data.size();
+    result.data.resize(s);
+    temp.data.resize(s);
+    for (int32_t i = 0; i < data.size(); i++) {
+        for (int32_t j = 0; j < data[i].size(); j++) {
+            result.data[i][j] = data[i][j];
+            temp.data[i][j] = data[i][j];
+        }
+    }
+    for (int32_t i = 0; i < p; i++) {
+        result *= temp;
+    }
     return result;
 }
